@@ -29,7 +29,7 @@ services:
       - ../logs/nginx:/var/log/nginx
     ports:
       - "80:80"
-      - "8080:8080"
+      - "8095:8095"
       - "443:443"
     restart: always
     command: nginx -g 'daemon off;'
