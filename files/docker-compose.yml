@@ -35,21 +35,22 @@ services:
     command: nginx -g 'daemon off;'
 
   mysql-db:
-      build: ./mysql
-      ports:
-        - "3306:3306"
-      volumes:
-        - ../data/mysql:/var/lib/mysql:rw
-        - ../logs/mysql:/var/lib/mysql-logs:rw
-        - ./mysql/conf.d:/etc/mysql/conf.d:ro
+      image: mysql
+      restart: always
       environment:
         MYSQL_ROOT_PASSWORD: 123456
-        MYSQL_DATABASE: zqiun
-        MYSQL_USER: zqiun
-        MYSQL_PASSWORD: zqiun123456
-      restart: always
-      command: "--character-set-server=utf8"
-
+      command:
+        --default-authentication-plugin=mysql_native_password
+        --character-set-server=utf8mb4
+        --collation-server=utf8mb4_general_ci
+        --explicit_defaults_for_timestamp=true
+        --lower_case_table_names=1
+      ports:
+        - 3306:3306
+      volumes:
+        - ../data/mysql:/var/lib/mysql
+        - ../logs/mysql:/var/lib/mysql-logs:rw
+        - ./mysql/conf.d:/etc/mysql/conf.d:ro
   redis-db:
       build: ./redis
       ports:

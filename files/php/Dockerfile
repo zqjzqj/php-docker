@@ -4,8 +4,8 @@ LABEL maintainer="540173107@qq.com"
 # set timezome
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN sed -i "s/archive.ubuntu./mirrors.aliyun./g" /etc/apt/sources.list
 RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
+RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
 RUN apt-get clean
 
 # Install package and PHP Core extensions
@@ -40,9 +40,7 @@ RUN pecl install swoole && echo "extension=swoole.so" > /usr/local/etc/php/conf.
 ENV COMPOSER_HOME /root/composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
-
 RUN rm -f /home/redis.tgz \
-
 WORKDIR /data
 
 # Write Permission
