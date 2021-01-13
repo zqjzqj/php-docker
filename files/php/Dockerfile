@@ -1,5 +1,5 @@
 FROM php:7.3-fpm
-LABEL maintainer="540173107@qq.com"
+LABEL maintainer="zqjzqj"
 
 # set timezome
 ENV TZ=Asia/Shanghai
