@@ -1,22 +1,22 @@
-FROM php:7.3-fpm
-LABEL maintainer="zqjzqj"
+FROM php:8.0-fpm
+LABEL maintainer="540173107@qq.com"
+
 
 # set timezome
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list
-RUN sed -i 's/archive.ubuntu.com/mirrors.aliyun.com/g' /etc/apt/sources.list
-RUN apt-get clean
+
+RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
+RUN  apt-get clean
 
 # Install package and PHP Core extensions
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update -y && apt-get install -y \
         libzip-dev \
         git \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
         && docker-php-ext-install zip \
         && docker-php-ext-install pdo_mysql \
@@ -40,7 +40,10 @@ RUN pecl install swoole && echo "extension=swoole.so" > /usr/local/etc/php/conf.
 ENV COMPOSER_HOME /root/composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
+
 RUN rm -f /home/redis.tgz \
+        rm -f /home/cphalcon.tar.gz 
+
 WORKDIR /data
 
 # Write Permission
