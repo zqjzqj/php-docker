@@ -7,7 +7,7 @@ dockerfiles that support zPhal's working environment
 
 相关软件版本：
 - PHP 7.2
-- MySQL 5.7
+- MySQL 8
 - Nginx 1.12
 - Redis 3.2
 
