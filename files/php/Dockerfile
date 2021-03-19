@@ -6,8 +6,10 @@ LABEL maintainer="540173107@qq.com"
 ENV TZ=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN  sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN  apt-get clean
+COPY ./sources.list /etc/apt/sources.list
+
+RUN cat /etc/apt/sources.list
+RUN rm -Rf /var/lib/apt/lists/*
 
 # Install package and PHP Core extensions
 RUN apt-get update -y && apt-get install -y \
@@ -41,8 +43,7 @@ ENV COMPOSER_HOME /root/composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ENV PATH $COMPOSER_HOME/vendor/bin:$PATH
 
-RUN rm -f /home/redis.tgz \
-        rm -f /home/cphalcon.tar.gz 
+RUN rm -f /home/redis.tgz
 
 WORKDIR /data
 
