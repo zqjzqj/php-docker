@@ -1,5 +1,6 @@
-# zqijun-dockerfiles
+# zqijun-docker
 dockerfiles that support zqijun's working environment
+>>>>>>> 2a7b7bed11da85edecb172543a607718bdc9cd0e
 
 ## 简介
 用 Docker 容器服务的方式搭建 zqijun 环境，易于维护、升级。使用前需了解 Docker 的基本概念，常用基本命令。
